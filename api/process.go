@@ -21,3 +21,21 @@ type ProcessList struct {
 	Size  int
 	Total int
 }
+
+type ProcessDef struct {
+	ErrMessage
+
+	ID           string
+	Key          string
+	Name         string
+	Version      int
+	DeploymentID string
+}
+
+type ProcessDefList struct {
+	ErrMessage
+
+	Data  []ProcessDef
+	Size  int
+	Total int
+}

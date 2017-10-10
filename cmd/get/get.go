@@ -42,7 +42,7 @@ var getCmd = &cobra.Command{
 		getSubCmd, found := getSubCmdMap[args[0]]
 
 		if !found {
-			fmt.Printf("%s is not support.", args[0])
+			fmt.Printf("'%s' is undefined, not sure how to get it.\n", args[0])
 			os.Exit(1)
 		}
 

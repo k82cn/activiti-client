@@ -51,7 +51,7 @@ func (g *GetProcessCmd) Describe(pid string) {
 	var vl api.VariableList
 
 	err = cmd.Client.Post(g.variableQueryURL, &api.Query{
-		ProcessInstanceId: pid,
+		ProcessInstanceId: &pid,
 	}, &vl)
 
 	cmd.CheckErr(err, &vl)
@@ -70,7 +70,7 @@ func (g *GetProcessCmd) Describe(pid string) {
 	var al api.ActivityList
 
 	err = cmd.Client.Post(g.acitivityQueryURL, &api.Query{
-		ProcessInstanceId: pid,
+		ProcessInstanceId: &pid,
 	}, &al)
 
 	cmd.CheckErr(err, &al)
