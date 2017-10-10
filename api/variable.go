@@ -1,10 +1,10 @@
 package api
 
 type Variable struct {
-	Name  string
-	Scope string
-	Type  string
-	Value string
+	Name  string `json:"name"`
+	Scope string `json:"scope"`
+	Type  string `json:"type"`
+	Value string `json:"value"`
 }
 
 type VariableData struct {

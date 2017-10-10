@@ -1,4 +1,4 @@
-package get
+package create
 
 import (
 	"fmt"
@@ -11,47 +11,40 @@ import (
 )
 
 func init() {
-	cmd.RootCmd.AddCommand(getCmd)
+	cmd.RootCmd.AddCommand(createCmd)
 }
 
-type Get interface {
-	Get()
-	Describe(id string)
+type CreateCmd interface {
+	Create(args []string)
 }
 
 var mapMutex sync.Mutex
-var getSubCmdMap = make(map[string]Get)
+var createSubCmdMap = make(map[string]CreateCmd)
 
-func registerGetCmd(name string, subCmd Get) {
+func registerCreateCmd(name string, subCmd CreateCmd) {
 	mapMutex.Lock()
 	defer mapMutex.Unlock()
 
-	getSubCmdMap[name] = subCmd
+	createSubCmdMap[name] = subCmd
 }
 
-var getCmd = &cobra.Command{
-	Use:   "get",
+var createCmd = &cobra.Command{
+	Use:   "create",
 	Short: "Print the version number of Hugo",
 	Long:  `All software has versions. This is Hugo's`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("What are you want to get?")
+			fmt.Println("What are you want to create?")
 			os.Exit(1)
 		}
 
-		getSubCmd, found := getSubCmdMap[args[0]]
+		createSubCmd, found := createSubCmdMap[args[0]]
 
 		if !found {
 			fmt.Printf("%s is not support.", args[0])
 			os.Exit(1)
 		}
 
-		if len(args) > 1 {
-			for _, id := range args[1:] {
-				getSubCmd.Describe(id)
-			}
-		} else {
-			getSubCmd.Get()
-		}
+		createSubCmd.Create(args[1:])
 	},
 }

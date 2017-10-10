@@ -21,7 +21,7 @@ type GetProcessCmd struct {
 	variableQueryURL  string
 }
 
-func (g *GetProcessCmd) Get() error {
+func (g *GetProcessCmd) Get() {
 	outputFormat := "%-10s%-50s%-30s%-30s\n"
 
 	var pl api.ProcessList
@@ -33,11 +33,9 @@ func (g *GetProcessCmd) Get() error {
 		fmt.Printf(outputFormat, p.ID, p.BusinessKey,
 			cmd.FormatTime(p.StartTime), cmd.FormatTime(p.EndTime))
 	}
-
-	return nil
 }
 
-func (g *GetProcessCmd) Describe(pid string) error {
+func (g *GetProcessCmd) Describe(pid string) {
 	var p api.Process
 	url := g.processHisURL + "/" + pid
 	err := cmd.Client.Get(url, &p)
@@ -84,6 +82,4 @@ func (g *GetProcessCmd) Describe(pid string) error {
 		fmt.Printf(activityFmt, a.ID, a.ActivityID, a.Assignee,
 			cmd.FormatTime(a.StartTime), cmd.FormatTime(a.EndTime))
 	}
-
-	return nil
 }
