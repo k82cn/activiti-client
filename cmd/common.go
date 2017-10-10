@@ -1,11 +1,13 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/k82cn/activiti-client/api"
 )
@@ -14,6 +16,14 @@ const (
 	DefaultTimeFormat = "01/02/06 15:04"
 )
 
+func FormatTime(t *time.Time) string {
+	if t == nil {
+		return ""
+	}
+
+	return t.Format(DefaultTimeFormat)
+}
+
 type ActivitiClient struct {
 	User     string
 	Password string
@@ -21,10 +31,10 @@ type ActivitiClient struct {
 	client   *http.Client
 }
 
-var client *ActivitiClient
+var Client *ActivitiClient
 
 func InitClient(user, password, url string) {
-	client = &ActivitiClient{
+	Client = &ActivitiClient{
 		User:     user,
 		Password: password,
 		BaseURL:  url,
@@ -32,7 +42,33 @@ func InitClient(user, password, url string) {
 	}
 }
 
-func (ac *ActivitiClient) Post(url string, data string, obj interface{}) error {
+func (ac *ActivitiClient) Post(url string, data interface{}, obj interface{}) error {
+	d, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("POST", ac.BaseURL+"/"+url, bytes.NewReader(d))
+	if err != nil {
+		return err
+	}
+	req.SetBasicAuth(ac.User, ac.Password)
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := ac.client.Do(req)
+	if err != nil {
+		return err
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	if obj != nil {
+		if err := json.Unmarshal(body, obj); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

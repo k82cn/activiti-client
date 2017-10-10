@@ -1,13 +1,17 @@
 package api
 
+import (
+	"time"
+)
+
 type Activity struct {
 	ErrMessage
 
 	ID         string
 	ActivityID string
 	Assignee   string
-	StartTime  string
-	EndTime    string
+	StartTime  *time.Time
+	EndTime    *time.Time
 }
 
 type ActivityList struct {

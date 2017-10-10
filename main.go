@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/k82cn/activiti-client/cmd/get"
+
 	"github.com/k82cn/activiti-client/cmd"
 )
 
