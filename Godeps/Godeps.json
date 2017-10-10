@@ -1,0 +1,24 @@
+{
+	"ImportPath": "github.com/k82cn/activiti-client",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/inconshreveable/mousetrap",
+			"Comment": "v1.0",
+			"Rev": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+		},
+		{
+			"ImportPath": "github.com/spf13/cobra",
+			"Rev": "4d6af280c76ff7d266434f2dba207c4b75dfc076"
+		},
+		{
+			"ImportPath": "github.com/spf13/pflag",
+			"Comment": "v1.0.0-7-ga9789e8",
+			"Rev": "a9789e855c7696159b7db0db7f440b449edf2b31"
+		}
+	]
+}
